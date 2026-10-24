@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Experience Diary</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f4f5fb;
+    color: #24243b;
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(135deg, #6254ed, #a64ee8);
+    color: white;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #f0eaff;
+    font-size: 14px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 18px;
+}
+
+.editor, .experience-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 6px 25px #24243b0b;
+}
+
+.editor h2 {
+    margin-bottom: 18px;
+    font-size: 22px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #dedfee;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 14px;
+    background: #fff;
+}
+
+input:focus, textarea:focus {
+    border-color: #7964f2;
+    box-shadow: 0 0 0 3px #7964f21a;
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 11px 17px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.save-btn {
+    background: #6b55eb;
+    color: white;
+}
+
+.clear-btn {
+    background: #eeeeF7;
+    color: #42425a;
+    margin-left: 7px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 30px 0 16px;
+}
+
+.section-title h2 {
+    font-size: 22px;
+}
+
+#search {
+    max-width: 260px;
+    margin: 0;
+}
+
+#experienceList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.experience-card {
+    padding: 21px;
+    overflow-wrap: anywhere;
+}
+
+.experience-card h3 {
+    color: #5c4be2;
+    font-size: 19px;
+    margin-bottom: 8px;
+}
+
+.experience-card .author {
+    color: #77758b;
+    font-size: 12px;
+    margin-bottom: 14px;
+}
+
+.experience-card .story {
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    margin-bottom: 18px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #eeeef5;
+    padding-top: 14px;
+}
+
+.card-footer small {
+    color: #88869b;
+}
+
+.delete-btn {
+    background: #ffe9ec;
+    color: #d62945;
+}
+
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 35px 15px;
+    color: #77758b;
+    background: white;
+    border-radius: 14px;
+}
+
+footer {
+    text-align: center;
+    color: #85839a;
+    padding: 30px 15px;
+    font-size: 12px;
+}
+
+@media (max-width: 650px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    #experienceList {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #search {
+        max-width: 100%;
+    }
+
+    .editor {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>📖 My Experience Diary</h1>
+    <p>Your life, your stories, your memories.</p>
+</header>
+
+<main class="container">
+
+    <section class="editor">
+        <h2>✍️ Write Your Experience</h2>
+
+        <form id="experienceForm">
+            <input
+                type="text"
+                id="author"
+                placeholder="Enter your name"
+                maxlength="60"
+                required
+            >
+
+            <input
+                type="text"
+                id="title"
+                placeholder="Experience title"
+                maxlength="100"
+                required
+            >
+
+            <textarea
+                id="story"
+                placeholder="Write your experience here..."
+                maxlength="10000"
+                required
+            ></textarea>
+
+            <button type="submit" class="save-btn">
+                💾 Save Experience
+            </button>
+
+            <button type="reset" class="clear-btn">
+                Clear
+            </button>
+        </form>
+    </section>
+
+    <div class="section-title">
+        <h2>📚 Saved Experiences</h2>
+        <input
+            type="search"
+            id="search"
+            placeholder="🔍 Search experiences..."
+        >
+    </div>
+
+    <section id="experienceList" aria-live="polite"></section>
+
+</main>
+
+<footer>
+    Made with ❤️ for every story worth remembering.
+</footer>
+
+<script>
+const form = document.getElementById("experienceForm");
+const authorInput = document.getElementById("author");
+const titleInput = document.getElementById("title");
+const storyInput = document.getElementById("story");
+const searchInput = document.getElementById("search");
+const experienceList = document.getElementById("experienceList");
+
+const STORAGE_KEY = "myExperienceDiary_v1";
+
+let experiences = loadExperiences();
+
+function loadExperiences() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        const data = saved ? JSON.parse(saved) : [];
+
+        if (!Array.isArray(data)) return [];
+
+        return data.filter(item =>
+            item &&
+            typeof item.id === "string" &&
+            typeof item.author === "string" &&
+            typeof item.title === "string" &&
+            typeof item.story === "string" &&
+            typeof item.date === "string"
+        );
+    } catch (error) {
+        alert("Saved data could not be read.");
+        return [];
+    }
+}
+
+function saveToStorage() {
+    try {
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(experiences)
+        );
+        return true;
+    } catch (error) {
+        alert("Data save nahi hua. Browser storage full ho sakti hai.");
+        return false;
+    }
+}
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const author = authorInput.value.trim();
+    const title = titleInput.value.trim();
+    const story = storyInput.value.trim();
+
+    if (!author || !title || !story) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    const newExperience = {
+        id: Date.now().toString() + "-" +
+            Math.random().toString(36).slice(2),
+        author: author,
+        title: title,
+        story: story,
+        date: new Date().toISOString()
+    };
+
+    experiences.unshift(newExperience);
+
+    if (saveToStorage()) {
+        form.reset();
+        renderExperiences();
+        alert("Your experience has been saved! ❤️");
+    } else {
+        experiences.shift();
+    }
+});
+
+function renderExperiences() {
+    experienceList.replaceChildren();
+
+    const query = searchInput.value.trim().toLowerCase();
+
+    const filtered = experiences.filter(item =>
+        item.title.toLowerCase().includes(query) ||
+        item.author.toLowerCase().includes(query) ||
+        item.story.toLowerCase().includes(query)
+    );
+
+    if (filtered.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = query
+            ? "No matching experiences found."
+            : "No experiences yet. Write your first story! ✨";
+
+        experienceList.appendChild(empty);
+        return;
+    }
+
+    filtered.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "experience-card";
+
+        const heading = document.createElement("h3");
+        heading.textContent = item.title;
+
+        const author = document.createElement("p");
+        author.className = "author";
+        author.textContent = "By " + item.author;
+
+        const story = document.createElement("p");
+        story.className = "story";
+        story.textContent = item.story;
+
+        const footer = document.createElement("div");
+        footer.className = "card-footer";
+
+        const date = document.createElement("small");
+        const parsedDate = new Date(item.date);
+
+        date.textContent = isNaN(parsedDate.getTime())
+            ? "Saved experience"
+            : parsedDate.toLocaleDateString();
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-btn";
+        deleteButton.textContent = "🗑️ Delete";
+
+        deleteButton.addEventListener("click", function() {
+            deleteExperience(item.id);
+        });
+
+        footer.append(date, deleteButton);
+        card.append(heading, author, story, footer);
+        experienceList.appendChild(card);
+    });
+}
+
+function deleteExperience(id) {
+    const confirmed = confirm(
+        "Kya aap waqai is experience ko delete karna chahte hain?"
+    );
+
+    if (!confirmed) return;
+
+    const oldExperiences = experiences;
+    experiences = experiences.filter(item => item.id !== id);
+
+    if (saveToStorage()) {
+        renderExperiences();
+    } else {
+        experiences = oldExperiences;
+    }
+}
+
+searchInput.addEventListener("input", renderExperiences);
+
+renderExperiences();
+</script>
+
+</body>
+</html>
